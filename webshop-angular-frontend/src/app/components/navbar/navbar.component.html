@@ -1,0 +1,49 @@
+<div class="navbar-fixed">
+    <nav class="nav-extended grey darken-3">
+        <div class="nav-wrapper container">
+            <a routerLink="/" class="brand-logo">Name / Logo</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <div id="search-form" class="search-bar-wrapper">
+                    <div class="input-field col s12">
+                        <input placeholder="Search" id="autocomplete-input" class="search-bar autocomplete"
+                            type="search">
+                    </div>
+                    <a href="#" class="black-text search-icon" id="search"><i class="material-icons">search</i></a>
+                </div>
+
+                <a class="btn white black-text" routerLink="/login">Log in</a>
+                <a class="btn white black-text" routerLink="/signup">Sign up</a>
+            </ul>
+            <a class="cart" href="#">
+                <i class="material-icons">shopping_cart</i>
+            </a>
+        </div>
+        <div class="nav-content container center">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a routerLink="c/computers">computers</a></li>
+                <li class="tab"><a routerLink="/c/components">components</a></li>
+                <li class="tab"><a routerLink="/c/peripherals">peripherals</a></li>
+                <li class="tab"><a routerLink="/c/phones">phones</a></li>
+                <li class="tab"><a routerLink="/c/gaming">gaming</a></li>
+                <li class="tab"><a routerLink="/c/network">network</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a routerLink="/c/computers">computers</a></li>
+    <li><a routerLink="/c/components">components</a></li>
+    <li><a routerLink="/c/peripherals">peripherals</a></li>
+    <li><a routerLink="/c/phones">phones</a></li>
+    <li><a routerLink="/c/gaming">gaming</a></li>
+    <li><a routerLink="/c/network">network</a></li>
+    <form>
+        <input placeholder="Search" class="search-bar" type="search">
+    </form>
+    <div class="buttons">
+        <a class="btn grey darken-3" routerLink="#">Log in</a>
+        <a class="btn grey darken-3" routerLink="#">Sign up</a>
+    </div>
+</ul>

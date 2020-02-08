@@ -1,0 +1,25 @@
+<div class="container products">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src='https://dummyimage.com/1200x400.png' alt='' />
+            </div>
+            <div class="swiper-slide">
+                <img src='https://dummyimage.com/1200x400.png' alt='' />
+            </div>
+            <div class="swiper-slide">
+                <img src='https://dummyimage.com/1200x400.png' alt='' />
+            </div>
+            <div class="swiper-slide">
+                <img src='https://dummyimage.com/1200x400.png' alt='' />
+            </div>
+        </div>
+        <div class="swiper-pagination swiper-pagination-black"></div>
+        <div class="swiper-button-prev swiper-button-black"></div>
+        <div class="swiper-button-next swiper-button-black"></div>
+    </div>
+    <h2>We recommend:</h2>
+    <div class="row">
+        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+    </div>
+</div>
