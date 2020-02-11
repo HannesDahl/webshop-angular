@@ -13,15 +13,20 @@ export class HttpService {
         return this.http.get(environment.serverUrl + '/frontproducts');
     }
 
-    getCategoryProducts($event) {
-        return this.http.get(environment.serverUrl + '/c/' + $event);
-    }
-
-    getPageProduct($event) {
-        return this.http.get(environment.serverUrl + '/p/' + $event);
-    }
-
     getRandomProducts() {
         return this.http.get(environment.serverUrl + '/randomproducts');
     }
+
+    getSearchProducts($event) {
+        return this.http.get(environment.serverUrl + '/search/' + $event);
+    }
+
+    getCategoryProducts($event) {
+        return this.http.get(environment.serverUrl + '/category/' + $event);
+    }
+
+    getPageProduct($event) {
+        return this.http.get(environment.serverUrl + '/product/' + $event);
+    }
+
 }

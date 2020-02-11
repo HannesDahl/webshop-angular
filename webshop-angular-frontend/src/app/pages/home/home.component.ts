@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../http.service';
 
 @Component({
@@ -7,8 +7,9 @@ import { HttpService } from '../../http.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
     @Output() public products: Array<Object>;
+    @ViewChild('categoryNameHeader', { static: false }) public categoryNameHeader: ElementRef;
+    @ViewChild('loaderWrapper', { static: false }) public loaderWrapper: ElementRef;
 
     constructor(private _http: HttpService) { }
 
@@ -16,6 +17,12 @@ export class HomeComponent implements OnInit {
         this._http.getFrontPageProducts().subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
+
+        window.onload = () => {
+            setTimeout(() => {
+                this.fadeOut(this.loaderWrapper.nativeElement);
+            }, 500);
+        }
 
         // @ts-ignore
         var mySwiper: any = new Swiper('.swiper-container', {
@@ -32,6 +39,18 @@ export class HomeComponent implements OnInit {
             },
         });
     }
+
+    public fadeOut(el) {
+        el.style.opacity = 1;
+
+        (function fade() {
+            if ((el.style.opacity -= .1) < 0) {
+                el.style.display = "none";
+            } else {
+                requestAnimationFrame(fade);
+            }
+        })();
+    };
 
     private _onProductsLoaded(data: any): void {
         this.products = data;

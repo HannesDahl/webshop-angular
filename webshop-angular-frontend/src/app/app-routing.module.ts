@@ -7,9 +7,9 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'c/:categoryname', component: CategoryPageComponent },
-  { path: `p/:productname`, component: ProductPageComponent },
-  { path: `s/:searchvalue`, component: SearchResultsComponent },
+  { path: 'category/:categoryname', component: CategoryPageComponent },
+  { path: `product/:productname`, component: ProductPageComponent },
+  { path: `search/:searchvalue`, component: SearchResultsComponent },
 ];
 
 @NgModule({

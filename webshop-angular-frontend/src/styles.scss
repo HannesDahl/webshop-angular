@@ -10,6 +10,19 @@ body {
     margin: 25px auto;
 }
 
+.loader-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+    width: 70%;
+    margin: 0 auto;
+    height: 100%;
+    position: absolute;
+    background-color: #fff;
+    z-index: 80;
+}
+
+
 @media(max-width:1200px) {
     .products {
         .card .card-image img {

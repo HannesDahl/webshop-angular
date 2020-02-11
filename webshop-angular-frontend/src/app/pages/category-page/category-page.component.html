@@ -1,33 +1,33 @@
 <ng-template [ngIf]="products" [ngIfElse]="noProducts">
-    <div class="loader-wrapper" id="loaderWrapper" #loaderWrapper>
-        <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
+    <div class="container products">
+        <div class="loader-wrapper" id="loaderWrapper" #loaderWrapper>
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container products">
-        <h3 #categoryNameHeader>Showing {{ category }}</h3>
+        <h3 #categoryNameHeader class="my2"></h3>
         <div class="row">
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
         </div>
     </div>
 </ng-template>
 
-<ng-template #noProducts>
+<ng-template #noProducts>¨
     <div class="container products" data-ng-init="getSomeProducts()">
         <h2 class="center my3">There are no products in this category</h2>
         <h5>Check out these products instead:</h5>
         <div class="row">
-            <app-product-card ngFor="let epicproduct of randomProducts" [product]="epicproduct"></app-product-card>
+            <app-product-card ngFor="let product of randomProducts" [product]="randomProducts"></app-product-card>
         </div>
     </div>
 </ng-template>

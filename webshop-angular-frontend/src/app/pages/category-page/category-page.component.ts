@@ -21,10 +21,17 @@ export class CategoryPageComponent implements OnInit {
             this._onProductsLoadFailed.bind(this));
 
         window.onload = () => {
+            if (this.categoryNameHeader) this.categoryNameHeader.nativeElement.textContent = `${(this._capitalize(this.url))}`;
+            else return;
+
             setTimeout(() => {
                 this.fadeOut(this.loaderWrapper.nativeElement);
             }, 500);
         }
+    }
+
+    private _capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     private _onRandomProductsLoaded(data: any): void {
@@ -41,8 +48,6 @@ export class CategoryPageComponent implements OnInit {
             this.products = data;
             console.log(this.products);
         }
-
-        // this.categoryNameHeader.nativeElement.textContent = `Showing ${(this.url)}`;
     }
 
     private _onProductsLoadFailed(error: any): void {

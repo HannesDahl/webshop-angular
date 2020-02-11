@@ -19,22 +19,37 @@ export class NavbarComponent implements OnInit {
         //     }
         // }
 
-        // let searchElement = document.getElementById('autocomplete-input');
-        // let searchValue;
-        // searchElement.addEventListener('keypress', (event) => {
+        let searchElement = document.getElementById('autocomplete-input');
+        let searchValue;
+        document.getElementById('search').addEventListener('click', (function (event) {
+            // @ts-ignore
+            searchValue = searchElement.value;
+            if (searchValue == '') {
+                event.preventDefault();
+                // @ts-ignore
+                M.toast({
+                    html: 'Insert a search value!',
+                });
+            } else {
+                location.pathname = `/search/${searchValue}`;
+            }
+        }));
 
-        //     if (event.key === 'Enter') {
-        //         searchValue = searchElement.value;
-        //         if (searchValue == '') {
-        //             event.preventDefault();
-        //             M.toast({
-        //                 html: 'Insert a search value!',
-        //             })
-        //         } else {
-        //             location.pathname = `/s/${searchValue}`;
-        //         }
-        //     }
-        // });
+        searchElement.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                // @ts-ignore
+                searchValue = searchElement.value;
+                if (searchValue == '') {
+                    event.preventDefault();
+                    // @ts-ignore
+                    M.toast({
+                        html: 'Insert a search value!',
+                    });
+                } else {
+                    location.pathname = `/search/${searchValue}`;
+                }
+            }
+        });
     }
 
 }
