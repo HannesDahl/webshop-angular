@@ -8,9 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductCardComponent implements OnInit {
 
     @Input() public product: Object;
+    @Input() public randomProducts: Object;
 
     constructor() { }
 
     ngOnInit() { }
+
+    public replaceSpaces(str: string): string {
+        return str.replace(/\s/g, '-');
+    }
 
 }

@@ -17,6 +17,7 @@ export class ProductPageComponent implements OnInit {
         this._http.getPageProduct(this.url).subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
+        window.scrollTo(0, 0);
     }
 
     private _onProductsLoaded(data: any): void {

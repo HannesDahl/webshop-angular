@@ -1,5 +1,13 @@
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .container.products {
-    margin: 75px auto;
+    margin: 25px auto;
 }
 
 @media(max-width:1200px) {

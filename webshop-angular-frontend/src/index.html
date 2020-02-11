@@ -7,7 +7,8 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- ICONS -->
+    <!-- FONTS & ICONS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- FRAMEWORK && CSS -->
     <link rel="stylesheet" href="assets/css/box-model.css">
@@ -20,22 +21,13 @@
 </head>
 
 <body>
+
     <app-root></app-root>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src="assets/js/init.js"></script>
-    <script>
-        let tabs = document.getElementsByClassName('tab')
-        for (let i = 0; i < tabs.length; i++) {
-            if (window.location.pathname == tabs[i].firstChild.pathname) {
-                tabs[i].classList.add('active');
-            } else {
-                tabs[i].classList.remove('active');
-            }
-        }
-    </script>
 
 </body>
 

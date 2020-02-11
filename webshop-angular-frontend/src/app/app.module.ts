@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoryPageComponent } from './pages/category-page/category-page.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
     ProductCardComponent,
     CategoryPageComponent,
     HomeComponent,
-    ProductPageComponent
+    ProductPageComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

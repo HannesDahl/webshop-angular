@@ -1,4 +1,6 @@
-.navbar-fixed {
+.navbar {
+    z-index: 90;
+
     .nav-extended {
         z-index: 9999;
     }
@@ -99,9 +101,12 @@
                 border-bottom-color: #fff;
                 border-bottom-width: 0;
 
-                &:hover,
-                &:focus {
+                &:hover {
                     border-bottom-width: 3px;
+                    background: none;
+                }
+
+                &:focus {
                     background: none;
                 }
             }

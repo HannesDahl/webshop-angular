@@ -10,7 +10,7 @@ export class HttpService {
     constructor(private http: HttpClient) { }
 
     getFrontPageProducts() {
-        return this.http.get(environment.serverUrl + '/products');
+        return this.http.get(environment.serverUrl + '/frontproducts');
     }
 
     getCategoryProducts($event) {
@@ -21,4 +21,7 @@ export class HttpService {
         return this.http.get(environment.serverUrl + '/p/' + $event);
     }
 
+    getRandomProducts() {
+        return this.http.get(environment.serverUrl + '/randomproducts');
+    }
 }

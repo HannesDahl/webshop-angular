@@ -8,7 +8,7 @@ const express = require('express'),
 app.use(cors());
 app.use(express.json());
 
-app.get('/products', function (req, res) {
+app.get('/frontproducts', function (req, res) {
     let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
         if (err) console.error(err.message);
         console.log('Connected to the products database.');
@@ -26,9 +26,26 @@ app.get('/products', function (req, res) {
     });
 });
 
+app.get('/randomproducts', function (req, res) {
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database.');
+    });
+
+    db.serialize(() => {
+        db.all(`SELECT * FROM products ORDER BY random() LIMIT 4`, (err, products) => {
+            if (err) console.error(err.message);
+            res.json(products)
+        });
+    });
+    db.close((err) => {
+        if (err) console.error(err.message);
+        console.log('Closed the database connection.');
+    });
+});
+
 app.get('/c/:category', function (req, res) {
     let categoryName = req.params.category;
-    console.log(categoryName);
 
     let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
         if (err) console.error(err.message);
@@ -55,7 +72,6 @@ app.get('/c/:category', function (req, res) {
 
 app.get('/p/:product', function (req, res) {
     let productUrl = req.params.product;
-    let productName = productUrl.replace(/_/g, " ")
 
     let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
         if (err) console.error(err.message);
@@ -63,7 +79,7 @@ app.get('/p/:product', function (req, res) {
     });
 
     db.serialize(() => {
-        db.get(`SELECT * FROM products WHERE name = ?`, [productName], (err, product) => {
+        db.get(`SELECT * FROM products WHERE url = ?`, [productUrl], (err, product) => {
             if (err) console.error(err.message);
             res.json(product);
         });

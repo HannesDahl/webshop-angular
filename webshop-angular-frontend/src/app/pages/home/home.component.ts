@@ -16,6 +16,21 @@ export class HomeComponent implements OnInit {
         this._http.getFrontPageProducts().subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
+
+        // @ts-ignore
+        var mySwiper: any = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
     }
 
     private _onProductsLoaded(data: any): void {
