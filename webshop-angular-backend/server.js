@@ -35,7 +35,7 @@ app.get('/randomproducts', function (req, res) {
     db.serialize(() => {
         db.all(`SELECT * FROM products ORDER BY random() LIMIT 4`, (err, products) => {
             if (err) console.error(err.message);
-            res.json(products)
+            res.json(products);
         });
     });
     db.close((err) => {
@@ -100,9 +100,10 @@ app.get('/search/:searchvalue', function (req, res) {
     });
 
     db.serialize(() => {
-        db.get(`SELECT * FROM products WHERE name LIKE '%${searchValue}%'`, (err, products) => {
+        db.all(`SELECT * FROM products WHERE name LIKE '%${searchValue}%'`, (err, products) => {
             if (err) console.error(err);
-            res.json([products]);
+            console.log(products);
+            res.json(products);
         });
     });
 
