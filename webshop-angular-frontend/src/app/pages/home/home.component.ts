@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../http.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -11,18 +12,23 @@ export class HomeComponent implements OnInit {
     @ViewChild('categoryNameHeader', { static: false }) public categoryNameHeader: ElementRef;
     @ViewChild('loaderWrapper', { static: false }) public loaderWrapper: ElementRef;
 
-    constructor(private _http: HttpService) { }
+    mySubscription: any;
+
+    constructor(private _http: HttpService, private router: Router) {
+        this.router.routeReuseStrategy.shouldReuseRoute = function () {
+            return false;
+        };
+        this.mySubscription = this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.router.navigated = false;
+            }
+        });
+    }
 
     ngOnInit() {
         this._http.getFrontPageProducts().subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
-
-        window.onload = () => {
-            setTimeout(() => {
-                this.fadeOut(this.loaderWrapper.nativeElement);
-            }, 500);
-        }
 
         // @ts-ignore
         var mySwiper: any = new Swiper('.swiper-container', {
@@ -38,6 +44,12 @@ export class HomeComponent implements OnInit {
                 prevEl: '.swiper-button-prev',
             },
         });
+    }
+
+    ngAfterContentInit() {
+        setTimeout(() => {
+            this.fadeOut(this.loaderWrapper.nativeElement);
+        }, 500);
     }
 
     public fadeOut(el) {

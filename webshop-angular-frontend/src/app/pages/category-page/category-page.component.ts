@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../http.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'app-category-page',
@@ -12,22 +13,36 @@ export class CategoryPageComponent implements OnInit {
     @ViewChild('categoryNameHeader', { static: false }) public categoryNameHeader: ElementRef;
     @ViewChild('loaderWrapper', { static: false }) public loaderWrapper: ElementRef;
 
-    constructor(private _http: HttpService) { }
+    mySubscription: any;
+
+    constructor(private _http: HttpService, private router: Router) {
+        this.router.routeReuseStrategy.shouldReuseRoute = function () {
+            return false;
+        };
+        this.mySubscription = this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.router.navigated = false;
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.mySubscription) {
+            this.mySubscription.unsubscribe();
+        }
+    }
 
     private url = window.location.href.replace(/^.*[\\\/]/, '');
     ngOnInit() {
         this._http.getCategoryProducts(this.url).subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
+    }
 
-        window.onload = () => {
-            if (this.categoryNameHeader) this.categoryNameHeader.nativeElement.textContent = `${(this._capitalize(this.url))}`;
-            else return;
-
-            setTimeout(() => {
-                this.fadeOut(this.loaderWrapper.nativeElement);
-            }, 500);
-        }
+    ngAfterContentInit() {
+        setTimeout(() => {
+            this.fadeOut(this.loaderWrapper.nativeElement);
+        }, 500);
     }
 
     private _capitalize = (str) => {
@@ -36,7 +51,6 @@ export class CategoryPageComponent implements OnInit {
 
     private _onRandomProductsLoaded(data: any): void {
         this.randomProducts = data;
-        console.log(this.randomProducts);
     }
 
     private _onProductsLoaded(data: any): void {
@@ -46,7 +60,6 @@ export class CategoryPageComponent implements OnInit {
                 this._onProductsLoadFailed.bind(this));
         } else {
             this.products = data;
-            console.log(this.products);
         }
     }
 
