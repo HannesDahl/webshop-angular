@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../http.service';
+import { RemoveLoader } from '../../remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +16,7 @@ export class CategoryPageComponent implements OnInit {
 
     mySubscription: any;
 
-    constructor(private _http: HttpService, private router: Router) {
+    constructor(private _http: HttpService, private router: Router, private removeLoader: RemoveLoader) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
@@ -39,10 +40,17 @@ export class CategoryPageComponent implements OnInit {
             this._onProductsLoadFailed.bind(this));
     }
 
-    ngAfterContentInit() {
-        setTimeout(() => {
-            this.fadeOut(this.loaderWrapper.nativeElement);
-        }, 500);
+    ngAfterViewInit() {
+        let tabs = document.getElementsByClassName('tab')
+        for (let i = 0; i < tabs.length; i++) {
+            // @ts-ignore
+            if (window.location.pathname == tabs[i].firstChild.pathname) {
+                tabs[i].classList.add('active');
+            } else {
+                tabs[i].classList.remove('active');
+            }
+        }
+        this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 
     private _capitalize = (str) => {
@@ -59,6 +67,9 @@ export class CategoryPageComponent implements OnInit {
                 this._onRandomProductsLoaded.bind(this),
                 this._onProductsLoadFailed.bind(this));
         } else {
+            this._http.getRandomProducts().subscribe(
+                this._onRandomProductsLoaded.bind(this),
+                this._onProductsLoadFailed.bind(this));
             this.products = data;
         }
     }
@@ -66,16 +77,4 @@ export class CategoryPageComponent implements OnInit {
     private _onProductsLoadFailed(error: any): void {
         console.error(error);
     }
-
-    public fadeOut(el) {
-        el.style.opacity = 1;
-
-        (function fade() {
-            if ((el.style.opacity -= .1) < 0) {
-                el.style.display = "none";
-            } else {
-                requestAnimationFrame(fade);
-            }
-        })();
-    };
 }

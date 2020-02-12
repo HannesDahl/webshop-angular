@@ -1,23 +1,30 @@
-<ng-template [ngIf]="products" [ngIfElse]="noProducts">
-    <div class="container products">
-        <div class="loader-wrapper" id="loaderWrapper" #loaderWrapper>
-            <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+<div class="container">
+    <div class="loader-wrapper" id="loaderWrapper" #loaderWrapper>
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<ng-template [ngIf]="products" [ngIfElse]="noProducts">
+    <div class="container products">
         <h3 #categoryNameHeader class="my2">{{ _capitalize(url) }}</h3>
         <div class="row">
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
+        <div class="row">
+            <h5>Check out these products aswell</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
         </div>
     </div>
 </ng-template>
@@ -27,7 +34,7 @@
         <h2 class="center my3">There are no products in this category</h2>
         <h5>Check out these products instead:</h5>
         <div class="row">
-            <app-product-card ngFor="let product of randomProducts" [product]="randomProducts"></app-product-card>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
         </div>
     </div>
 </ng-template>

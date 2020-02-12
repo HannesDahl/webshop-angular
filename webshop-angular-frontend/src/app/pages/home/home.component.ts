@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../http.service';
+import { RemoveLoader } from '../../remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
 
     mySubscription: any;
 
-    constructor(private _http: HttpService, private router: Router) {
+    constructor(private _http: HttpService, private router: Router, private removeLoader: RemoveLoader) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
@@ -46,23 +47,15 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    ngAfterContentInit() {
-        setTimeout(() => {
-            this.fadeOut(this.loaderWrapper.nativeElement);
-        }, 500);
-    }
-
-    public fadeOut(el) {
-        el.style.opacity = 1;
-
-        (function fade() {
-            if ((el.style.opacity -= .1) < 0) {
-                el.style.display = "none";
-            } else {
-                requestAnimationFrame(fade);
+    ngAfterViewInit() {
+        let tabs = document.getElementsByClassName('tab');
+        for (let i = 0; i < tabs.length; i++) {
+            if (tabs[i].classList.contains('active')) {
+                tabs[i].classList.remove('active');
             }
-        })();
-    };
+        }
+        this.removeLoader.remove(this.loaderWrapper.nativeElement);
+    }
 
     private _onProductsLoaded(data: any): void {
         this.products = data;
