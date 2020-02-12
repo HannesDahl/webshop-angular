@@ -102,7 +102,6 @@ app.get('/search/:searchvalue', function (req, res) {
     db.serialize(() => {
         db.all(`SELECT * FROM products WHERE name LIKE '%${searchValue}%'`, (err, products) => {
             if (err) console.error(err);
-            console.log(products);
             res.json(products);
         });
     });
