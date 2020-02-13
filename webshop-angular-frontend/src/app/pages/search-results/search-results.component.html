@@ -1,6 +1,43 @@
-<div class="container products">
-    <div class="row">
-        <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>
-        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+<!-- <ng-template [ngIf]="products" [ngIfElse]="noSearchResult">
+    <div class="container products">
+        <div class="row">
+            <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
+        <div class="row">
+            <h5>Check out these products aswell</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
+        </div>
     </div>
-</div>
+</ng-template>
+
+<ng-template #noSearchResult>
+    <div class="container products">
+        <div class="row">
+            <h5>Check out these products instead</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
+        </div>
+    </div>
+</ng-template> -->
+
+<ng-template [ngIf]="products" [ngIfElse]="noProducts">
+    <div class="container products">
+        <div class="row">
+            <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
+        <div class="row">
+            <h5>Check out these products aswell</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noProducts>
+    <div class="container products">
+        <div class="row">
+            <h5>Check out these products instead</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
+        </div>
+    </div>
+</ng-template>

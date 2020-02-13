@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { HttpService } from '../../http.service';
-import { RemoveLoader } from '../../remove-loader.service';
+import { HttpService } from '../../services/http.service';
+import { RemoveLoader } from '../../services/remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
