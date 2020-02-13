@@ -11,8 +11,8 @@ import { NavigationEnd, Router } from '@angular/router';
 export class CategoryPageComponent implements OnInit {
     @Output() public products: Array<Object>;
     @Output() public randomProducts: Array<Object>;
-    @ViewChild('categoryNameHeader', { static: false }) public categoryNameHeader: ElementRef;
-    @ViewChild('loaderWrapper', { static: false }) public loaderWrapper: ElementRef;
+    @ViewChild('categoryNameHeader') public categoryNameHeader: ElementRef;
+    @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
     mySubscription: any;
 

@@ -10,8 +10,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
     @Output() public products: Array<Object>;
-    @ViewChild('categoryNameHeader', { static: false }) public categoryNameHeader: ElementRef;
-    @ViewChild('loaderWrapper', { static: false }) public loaderWrapper: ElementRef;
+    @ViewChild('categoryNameHeader') public categoryNameHeader: ElementRef;
+    @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
     mySubscription: any;
 
