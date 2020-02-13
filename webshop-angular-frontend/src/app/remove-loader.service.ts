@@ -18,6 +18,6 @@ export class RemoveLoader {
                     requestAnimationFrame(fade);
                 }
             })();
-        }, 250);
+        }, 500);
     }
 }

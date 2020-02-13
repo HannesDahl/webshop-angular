@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { HttpService } from '../../services/http.service';
-import { RemoveLoader } from '../../services/remove-loader.service';
+import { HttpService } from '../../http.service';
+import { RemoveLoader } from '../../remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -38,10 +38,6 @@ export class CategoryPageComponent implements OnInit {
         this._http.getCategoryProducts(this.url).subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
-
-        this._http.getRandomProducts().subscribe(
-            this._onRandomProductsLoaded.bind(this),
-            this._onProductsLoadFailed.bind(this));
     }
 
     ngAfterViewInit() {
@@ -63,12 +59,19 @@ export class CategoryPageComponent implements OnInit {
 
     private _onRandomProductsLoaded(data: any): void {
         this.randomProducts = data;
-        console.log(this.randomProducts);
     }
 
     private _onProductsLoaded(data: any): void {
-        this.products = data;
-        console.log(this.products);
+        if (data.length == 0) {
+            this._http.getRandomProducts().subscribe(
+                this._onRandomProductsLoaded.bind(this),
+                this._onProductsLoadFailed.bind(this));
+        } else {
+            this._http.getRandomProducts().subscribe(
+                this._onRandomProductsLoaded.bind(this),
+                this._onProductsLoadFailed.bind(this));
+            this.products = data;
+        }
     }
 
     private _onProductsLoadFailed(error: any): void {
