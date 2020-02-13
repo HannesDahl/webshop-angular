@@ -1,6 +1,22 @@
-<div class="container products">
-    <div class="row">
-        <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>
-        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+<app-preloader></app-preloader>
+
+<ng-template [ngIf]="products.length > 0" [ngIfElse]="noProductsFound">
+    <div class="container products">
+        <div class="row">
+            <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
     </div>
-</div>
+</ng-template>
+
+<ng-template #noProductsFound>
+    <div class="container products">
+        <div class="row">
+            <h2 class="my5 center">No products found</h2>
+        </div>
+        <div class="row">
+            <h5>Check out these products instead:</h5>
+            <app-product-card *ngFor="let product of randomProducts" [product]="product"></app-product-card>
+        </div>
+    </div>
+</ng-template>

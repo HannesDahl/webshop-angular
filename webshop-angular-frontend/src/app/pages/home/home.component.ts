@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { RemoveLoader } from '../../services/remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +14,7 @@ export class HomeComponent implements OnInit {
 
     mySubscription: any;
 
-    constructor(private _http: HttpService, private router: Router, private removeLoader: RemoveLoader) {
+    constructor(private _http: HttpService, private router: Router) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
@@ -45,10 +44,6 @@ export class HomeComponent implements OnInit {
                 prevEl: '.swiper-button-prev',
             },
         });
-    }
-
-    ngAfterViewInit() {
-        this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 
     private _onProductsLoaded(data: any): void {

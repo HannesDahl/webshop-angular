@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { RemoveLoader } from '../../services/remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -15,8 +14,9 @@ export class CategoryPageComponent implements OnInit {
     @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
     mySubscription: any;
+    productsLength: any;
 
-    constructor(private _http: HttpService, private router: Router, private removeLoader: RemoveLoader) {
+    constructor(private _http: HttpService, private router: Router) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
@@ -38,10 +38,10 @@ export class CategoryPageComponent implements OnInit {
         this._http.getCategoryProducts(this.url).subscribe(
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
-    }
 
-    ngAfterViewInit() {
-        this.removeLoader.remove(this.loaderWrapper.nativeElement);
+        this._http.getRandomProducts().subscribe(
+            this._onRandomProductsLoaded.bind(this),
+            this._onProductsLoadFailed.bind(this));
     }
 
     public _capitalize = (str) => {
@@ -53,16 +53,8 @@ export class CategoryPageComponent implements OnInit {
     }
 
     private _onProductsLoaded(data: any): void {
-        if (data.length == 0) {
-            this._http.getRandomProducts().subscribe(
-                this._onRandomProductsLoaded.bind(this),
-                this._onProductsLoadFailed.bind(this));
-        } else {
-            this._http.getRandomProducts().subscribe(
-                this._onRandomProductsLoaded.bind(this),
-                this._onProductsLoadFailed.bind(this));
-            this.products = data;
-        }
+        this.products = data;
+        this.productsLength = data.length
     }
 
     private _onProductsLoadFailed(error: any): void {
