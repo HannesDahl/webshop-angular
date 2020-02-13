@@ -10,15 +10,6 @@ export class NavbarComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        // let tabs = document.getElementsByClassName('tab');
-        // for (let i = 0; i < tabs.length; i++) {
-        //     if (window.location.pathname == tabs[i].firstChild.pathname) {
-        //         tabs[i].classList.add('active');
-        //     } else {
-        //         tabs[i].classList.remove('active');
-        //     }
-        // }
-
         let searchElement = document.getElementById('autocomplete-input');
         let searchValue;
         document.getElementById('search').addEventListener('click', (function (event) {

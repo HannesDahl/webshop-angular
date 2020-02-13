@@ -1,4 +1,4 @@
-.navbar {
+.navbar-fixed {
     z-index: 90;
 
     .nav-extended {
@@ -85,30 +85,28 @@
             justify-content: center;
         }
 
-        .active.tab {
-            a {
-                border-bottom-width: 3px;
-                color: #fff;
-            }
+        a.active.tab {
+            border-bottom-width: 3px;
+            color: #fff;
         }
 
-        .tab {
+        a.tab {
+            padding: 0 25px;
             background: none;
+            transition: border-width .2s;
+            border-bottom-style: solid;
+            border-bottom-color: #fff;
+            border-bottom-width: 0;
+            color: #ccc;
 
-            a {
-                transition: border-width .2s;
-                border-bottom-style: solid;
-                border-bottom-color: #fff;
-                border-bottom-width: 0;
+            &:hover {
+                border-bottom-width: 3px;
+                background: none;
+                color: #fff;
+            }
 
-                &:hover {
-                    border-bottom-width: 3px;
-                    background: none;
-                }
-
-                &:focus {
-                    background: none;
-                }
+            &:focus {
+                background: none;
             }
         }
     }

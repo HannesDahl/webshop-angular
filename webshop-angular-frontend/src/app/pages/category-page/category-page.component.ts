@@ -41,15 +41,6 @@ export class CategoryPageComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        let tabs = document.getElementsByClassName('tab')
-        for (let i = 0; i < tabs.length; i++) {
-            // @ts-ignore
-            if (window.location.pathname == tabs[i].firstChild.pathname) {
-                tabs[i].classList.add('active');
-            } else {
-                tabs[i].classList.remove('active');
-            }
-        }
         this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 

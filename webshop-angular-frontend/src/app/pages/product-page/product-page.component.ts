@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
+import { RemoveLoader } from '../../services/remove-loader.service';
 
 @Component({
     selector: 'app-product-page',
@@ -7,10 +8,11 @@ import { HttpService } from '../../services/http.service';
     styleUrls: ['./product-page.component.scss']
 })
 export class ProductPageComponent implements OnInit {
+    @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
     product: any;
 
-    constructor(private _http: HttpService) { }
+    constructor(private _http: HttpService, private removeLoader: RemoveLoader) { }
 
     private url = window.location.href.replace(/^.*[\\\/]/, '');
     ngOnInit() {
@@ -18,6 +20,10 @@ export class ProductPageComponent implements OnInit {
             this._onProductsLoaded.bind(this),
             this._onProductsLoadFailed.bind(this));
         window.scrollTo(0, 0);
+    }
+
+    ngAfterViewInit() {
+        this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 
     private _onProductsLoaded(data: any): void {

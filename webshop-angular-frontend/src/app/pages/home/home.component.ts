@@ -48,12 +48,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        let tabs = document.getElementsByClassName('tab');
-        for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i].classList.contains('active')) {
-                tabs[i].classList.remove('active');
-            }
-        }
         this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 
