@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../http.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
     selector: 'app-product-page',
@@ -8,7 +8,7 @@ import { HttpService } from '../../http.service';
 })
 export class ProductPageComponent implements OnInit {
 
-    product: Object;
+    product: any;
 
     constructor(private _http: HttpService) { }
 

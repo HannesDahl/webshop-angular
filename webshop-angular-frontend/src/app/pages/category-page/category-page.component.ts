@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { HttpService } from '../../http.service';
-import { RemoveLoader } from '../../remove-loader.service';
+import { HttpService } from '../../services/http.service';
+import { RemoveLoader } from '../../services/remove-loader.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -33,7 +33,7 @@ export class CategoryPageComponent implements OnInit {
         }
     }
 
-    private url = window.location.href.replace(/^.*[\\\/]/, '');
+    public url = window.location.href.replace(/^.*[\\\/]/, '');
     ngOnInit() {
         this._http.getCategoryProducts(this.url).subscribe(
             this._onProductsLoaded.bind(this),
@@ -53,7 +53,7 @@ export class CategoryPageComponent implements OnInit {
         this.removeLoader.remove(this.loaderWrapper.nativeElement);
     }
 
-    private _capitalize = (str) => {
+    public _capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
