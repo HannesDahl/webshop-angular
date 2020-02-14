@@ -12,7 +12,9 @@ import { CategoryPageComponent } from './pages/category-page/category-page.compo
 import { HomeComponent } from './pages/home/home.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PreloaderComponent } from './components/preloader/preloader.component';
+import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { PreloaderComponent } from './components/preloader/preloader.component';
     HomeComponent,
     ProductPageComponent,
     SearchResultsComponent,
-    PreloaderComponent
+    PreloaderComponent,
+    FilterBarComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

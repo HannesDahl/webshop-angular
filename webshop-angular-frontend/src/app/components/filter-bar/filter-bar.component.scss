@@ -1,0 +1,49 @@
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 125px;
+
+    .input-field {
+        margin: 0 25px;
+    }
+}
+
+.noUi-connect {
+    background-color: #424242;
+}
+
+.priceInput {
+    width: 75px !important;
+}
+
+.price-range-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#setprice {
+    text-decoration: none;
+    margin-left: 10px;
+    color: white;
+    background-color: #424242;
+    padding: 0 6px;
+    border-radius: 2px;
+}
+
+.dropdown-content {
+    z-index: 5 !important;
+}
+
+.noUi-handle {
+    width: 20px;
+
+    &::before {
+        left: 6px;
+    }
+
+    &::after {
+        left: 11px;
+    }
+}

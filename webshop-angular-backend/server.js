@@ -57,8 +57,21 @@ app.get('/category/:category', function (req, res) {
             if (err) console.error(err.message)
 
             let categoryId = row.id;
+            let sqlCode = `SELECT * FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`;
 
-            db.all(`SELECT * FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`, [categoryId], (err, products) => {
+            if (req.query) {
+                if (req.query.pb == 'asc') {
+                    sqlCode += ` ORDER BY price ASC`;
+                } else if (req.query.pb == 'desc') {
+                    sqlCode += ` ORDER BY price DESC`;
+                } else if (req.query.ob == 'A-Z') {
+                    sqlCode += ` ORDER BY name ASC`;
+                } else if (req.query.ob == 'Z-A') {
+                    sqlCode += ` ORDER BY name DESC`;
+                }
+            }
+
+            db.all(sqlCode, [categoryId], (err, products) => {
                 if (err) console.error(err.message);
                 res.json(products);
             });

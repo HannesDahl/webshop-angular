@@ -6,10 +6,11 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <div id="search-form" class="search-bar-wrapper">
                     <div class="input-field col s12">
-                        <input placeholder="Search" id="autocomplete-input" class="search-bar autocomplete"
-                            type="search">
+                        <input placeholder="Search" (keypress)="enterSearch($event)" #searchElement
+                            id="autocomplete-input" class="search-bar autocomplete" type="search">
                     </div>
-                    <a href="#" class="black-text search-icon" id="search"><i class="material-icons">search</i></a>
+                    <a href="#" (click)="clickSearch($event)" class="black-text search-icon" id="search"><i
+                            class="material-icons">search</i></a>
                 </div>
 
                 <a class="btn white black-text" routerLink="/login">Log in</a>

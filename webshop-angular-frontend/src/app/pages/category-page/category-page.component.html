@@ -2,8 +2,11 @@
 
 <ng-template [ngIf]="products.length > 0" [ngIfElse]="noProducts">
     <div class="container products">
-        <h3 #categoryNameHeader class="m1 mt5">{{ _capitalize(url) }} ({{ productsLength }})</h3>
         <div class="row">
+            <app-filter-bar></app-filter-bar>
+        </div>
+        <div class="row">
+            <h3 #categoryNameHeader class="mb1 mt3">{{ _capitalize(url) }} ({{ productsLength }})</h3>
             <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
         </div>
         <div class="row">

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -6,41 +7,50 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+    @ViewChild('searchElement') public searchElement: ElementRef;
 
-    constructor() { }
+    constructor(private router: Router) { }
 
-    ngOnInit() {
-        let searchElement = document.getElementById('autocomplete-input');
+    ngOnInit() { }
+
+    public enterSearch(e) {
+        let searchElement = this.searchElement.nativeElement;
         let searchValue;
-        document.getElementById('search').addEventListener('click', (function (event) {
+
+        if (e.key === 'Enter') {
             // @ts-ignore
             searchValue = searchElement.value;
             if (searchValue == '') {
-                event.preventDefault();
+                e.preventDefault();
                 // @ts-ignore
                 M.toast({
-                    html: 'Insert a search value!',
+                    html: 'Insert a search value!'
                 });
             } else {
-                location.pathname = `/search/${searchValue}`;
+                this.search(searchValue);
             }
-        }));
-
-        searchElement.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                // @ts-ignore
-                searchValue = searchElement.value;
-                if (searchValue == '') {
-                    event.preventDefault();
-                    // @ts-ignore
-                    M.toast({
-                        html: 'Insert a search value!',
-                    });
-                } else {
-                    location.pathname = `/search/${searchValue}`;
-                }
-            }
-        });
+        }
     }
 
+    public clickSearch(e) {
+        e.preventDefault();
+
+        let searchElement = document.getElementById('autocomplete-input');
+        let searchValue;
+        // @ts-ignore
+        searchValue = searchElement.value;
+        if (searchValue == '') {
+            event.preventDefault();
+            // @ts-ignore
+            M.toast({
+                html: 'Insert a search value!'
+            });
+        } else {
+            this.search(searchValue);
+        }
+    }
+
+    public search(searchValue) {
+        this.router.navigate([`/search/${searchValue}`]);
+    }
 }
