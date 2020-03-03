@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { RemoveLoader } from '../../services/remove-loader.service';
 
 @Component({
     selector: 'app-preloader',
@@ -9,7 +8,7 @@ import { RemoveLoader } from '../../services/remove-loader.service';
 export class PreloaderComponent implements OnInit {
     @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
-    constructor(private removeLoader: RemoveLoader) { }
+    constructor() { }
 
     ngOnInit(): void { }
 
@@ -17,7 +16,20 @@ export class PreloaderComponent implements OnInit {
         if (window.location.pathname == '/') {
             this.loaderWrapper.nativeElement.style.width = '70%';
         }
-        this.removeLoader.remove(this.loaderWrapper.nativeElement);
+        this.remove(this.loaderWrapper.nativeElement);
     }
 
+    public remove(el) {
+        setTimeout(() => {
+            el.style.opacity = 1;
+
+            (function fade() {
+                if ((el.style.opacity -= .1) < 0) {
+                    el.style.display = "none";
+                } else {
+                    requestAnimationFrame(fade);
+                }
+            })();
+        }, 250);
+    }
 }

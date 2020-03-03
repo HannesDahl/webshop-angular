@@ -8,13 +8,13 @@ import { NavigationEnd, Router } from '@angular/router';
     styleUrls: ['./category-page.component.scss']
 })
 export class CategoryPageComponent implements OnInit {
-    @Output() public products: Array<Object>;
-    @Output() public randomProducts: Array<Object>;
+    @Output() public products: any;
+    @Output() public randomProducts: any;
     @ViewChild('categoryNameHeader') public categoryNameHeader: ElementRef;
-    @ViewChild('loaderWrapper') public loaderWrapper: ElementRef;
 
     mySubscription: any;
     productsLength: any;
+    categoryName: string;
 
     constructor(private _http: HttpService, private router: Router) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -55,6 +55,9 @@ export class CategoryPageComponent implements OnInit {
     private _onProductsLoaded(data: any): void {
         this.products = data;
         this.productsLength = data.length
+
+        this.categoryName = window.location.href.replace(/^.*[\\\/]/, '');
+        this.categoryName = this.categoryName.replace(/\?.*$/, '');
     }
 
     private _onProductsLoadFailed(error: any): void {

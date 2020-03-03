@@ -30,7 +30,6 @@ export class SearchResultsComponent implements OnInit {
 
     private _onProductsLoaded(data: any): void {
         this.products = data;
-        console.log(this.products);
     }
 
     private _onProductsLoadFailed(error: any): void {

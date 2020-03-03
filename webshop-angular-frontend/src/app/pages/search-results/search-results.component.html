@@ -1,6 +1,6 @@
 <app-preloader></app-preloader>
 
-<ng-template [ngIf]="products.length > 0" [ngIfElse]="noProductsFound">
+<ng-template *ngIf="products" [ngIf]="products.length > 0" [ngIfElse]="noProductsFound">
     <div class="container products">
         <div class="row">
             <h3 class="mb3 mt2">Search result(s) for: {{ url }}</h3>

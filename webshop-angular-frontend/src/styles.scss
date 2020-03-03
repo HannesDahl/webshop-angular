@@ -25,6 +25,13 @@ main {
     z-index: 80;
 }
 
+.noUi-connect {
+    background: #424242;
+}
+
+.noUi-touch-area {
+    outline: none;
+}
 
 @media(max-width:1200px) {
     .products {

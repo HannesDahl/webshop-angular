@@ -60,14 +60,24 @@ app.get('/category/:category', function (req, res) {
             let sqlCode = `SELECT * FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`;
 
             if (req.query) {
-                if (req.query.pb == 'asc') {
-                    sqlCode += ` ORDER BY price ASC`;
-                } else if (req.query.pb == 'desc') {
-                    sqlCode += ` ORDER BY price DESC`;
-                } else if (req.query.ob == 'A-Z') {
-                    sqlCode += ` ORDER BY name ASC`;
-                } else if (req.query.ob == 'Z-A') {
-                    sqlCode += ` ORDER BY name DESC`;
+                if (req.query.s) {
+                    sqlCode += ` AND name LIKE '%${req.query.s}%'`
+                }
+
+                if (req.query.ob) {
+                    switch (req.query.ob) {
+                        case 'asc':
+                            sqlCode += ' ORDER BY price ASC';
+                            break;
+                        case 'desc':
+                            sqlCode += ' ORDER BY price DESC';
+                            break;
+                        case 'A-Z':
+                            sqlCode += ' ORDER BY name ASC';
+                            break;
+                        case 'Z-A':
+                            sqlCode += ' ORDER BY name DESC';
+                    }
                 }
             }
 

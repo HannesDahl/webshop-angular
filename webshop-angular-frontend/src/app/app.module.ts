@@ -17,25 +17,25 @@ import { PreloaderComponent } from './components/preloader/preloader.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    ProductCardComponent,
-    CategoryPageComponent,
-    HomeComponent,
-    ProductPageComponent,
-    SearchResultsComponent,
-    PreloaderComponent,
-    FilterBarComponent,
-    PageNotFoundComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        FooterComponent,
+        ProductCardComponent,
+        CategoryPageComponent,
+        HomeComponent,
+        ProductPageComponent,
+        SearchResultsComponent,
+        PreloaderComponent,
+        FilterBarComponent,
+        PageNotFoundComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
