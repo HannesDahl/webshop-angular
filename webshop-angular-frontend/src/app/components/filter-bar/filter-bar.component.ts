@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Output } from '@angula
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { QueryFilterService } from '../../services/query-filter.service';
+declare var noUiSlider: any;
+declare var M: any;
 
 @Component({
     selector: 'app-filter-bar',
@@ -17,10 +19,16 @@ export class FilterBarComponent implements OnInit {
     @ViewChild('minInput') public minInput: ElementRef;
     @ViewChild('maxInput') public maxInput: ElementRef;
     @ViewChild('priceSlider') public priceSlider: ElementRef;
+    @ViewChild('categorySearch') public categorySearch: ElementRef;
+    @ViewChild('categorySearchLabel') public categorySearchLabel: ElementRef;
     @Input() products: any;
     categories: any;
     mySubscription: any;
     categoryName: string;
+    prices = [];
+    minPrice: any;
+    maxPrice: any;
+    priceRangeValues: any;
 
     constructor(private router: Router, private QueryFilter: QueryFilterService, private _http: HttpService) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -50,45 +58,35 @@ export class FilterBarComponent implements OnInit {
 
     private _onCategoryPricesLoaded(data: any): void {
         this.categories = data;
-        console.log(this.categories);
-    }
 
-    private _onCategoryPricesLoadFailed(error: any): void {
-        console.error(error);
-    }
-
-    ngAfterViewInit(): void {
-        // @ts-ignore
         M.FormSelect.init(this.selectElement.nativeElement);
-
-        let prices = [];
-        if (this.categories) {
-            for (let i = 0; i < this.categories.length; i++) {
-                prices.push(this.categories[i].price);
-            }
-        }
-        let minPrice = (prices.sort(function (a, b) { return a - b }))[0];
-        let maxPrice = (prices.sort(function (a, b) { return b - a }))[0];
-
-        this.minInput.nativeElement.value = minPrice;
-        this.maxInput.nativeElement.value = maxPrice;
-        this.minInput.nativeElement.setAttribute('min', minPrice);
-        this.minInput.nativeElement.setAttribute('max', maxPrice);
-        this.maxInput.nativeElement.setAttribute('min', minPrice);
-        this.maxInput.nativeElement.setAttribute('max', maxPrice);
-
         let slider = document.getElementById('price-slider');
-        // @ts-ignore
+
+        this.prices = [];
+        for (let i = 0; i < this.categories.length; i++) {
+            this.prices.push(this.categories[i].price);
+        }
+
+        this.minPrice = (this.prices.sort(function (a, b) { return a - b }))[0];
+        this.maxPrice = (this.prices.sort(function (a, b) { return b - a }))[0];
+
+        this.minInput.nativeElement.value = this.minPrice;
+        this.maxInput.nativeElement.value = this.maxPrice;
+        this.minInput.nativeElement.setAttribute('min', this.minPrice);
+        this.minInput.nativeElement.setAttribute('max', this.maxPrice);
+        this.maxInput.nativeElement.setAttribute('min', this.minPrice);
+        this.maxInput.nativeElement.setAttribute('max', this.maxPrice);
+
         noUiSlider.create(slider, {
-            start: [minPrice, maxPrice],
+            start: [this.minPrice, this.maxPrice],
             connect: true,
             step: 1,
             orientation: 'horizontal',
             tooltips: true,
             disabled: true,
             range: {
-                'min': minPrice,
-                'max': maxPrice
+                'min': this.minPrice,
+                'max': this.maxPrice
             },
             margin: 10,
             // @ts-ignore
@@ -101,12 +99,41 @@ export class FilterBarComponent implements OnInit {
         slider.noUiSlider.on('update', () => {
             // @ts-ignore
             let currentSliderValues = slider.noUiSlider.get();
-
             this.minInput.nativeElement.value = currentSliderValues[0];
             this.maxInput.nativeElement.value = currentSliderValues[1];
+        });
 
+        if (window.location.search.includes('pr=')) {
+            console.log('yeah');
+            this.priceRangeValues = this.getParameterByName('pr', window.location);
+            this.priceRangeValues = this.priceRangeValues.split('-');
+            // @ts-ignore
+            slider.noUiSlider.set([parseInt(this.priceRangeValues[0]), parseInt(this.priceRangeValues[1])]);
+            this.minInput.nativeElement.value = this.priceRangeValues[0];
+            this.maxInput.nativeElement.value = this.priceRangeValues[1];
+        } else {
+            console.log('nah');
+            this.minPrice = this.minPrice;
+            this.maxPrice = this.maxPrice;
+        }
+
+        // @ts-ignore
+        slider.noUiSlider.on('change', () => {
+            // @ts-ignore
+            let currentSliderValues = slider.noUiSlider.get();
             history.pushState(null, null, this.url + this.QueryFilter.handleQueryParams(location.search, `pr=${currentSliderValues[0]}-${currentSliderValues[1]}`));
         });
+    }
+
+    ngAfterViewInit(): void {
+        if (this.getParameterByName('s', window.location)) {
+            this.categorySearch.nativeElement.value = this.getParameterByName('s', window.location);
+            this.categorySearchLabel.nativeElement.classList.add('active');
+        }
+    }
+
+    private _onCategoryPricesLoadFailed(error: any): void {
+        console.error(error);
     }
 
     public sortFilter(e) {
@@ -118,4 +145,17 @@ export class FilterBarComponent implements OnInit {
         }
     }
 
+    public getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    public reloadWindow() {
+        window.location.reload();
+    }
 }

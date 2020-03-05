@@ -1,7 +1,7 @@
 <form class="filter-bar">
     <div class="input-field col s3">
-        <input id="category-search" name="s" (keyup)="sortFilter($event)" type="text" autocomplete="off">
-        <label for="category-search">Search</label>
+        <input #categorySearch name="s" (keyup)="sortFilter($event)" type="text" autocomplete="off">
+        <label #categorySearchLabel for="category-search">Search</label>
     </div>
 
     <div class="input-filed col s5 mt3">
@@ -23,3 +23,5 @@
         <!-- <label>Materialize Select</label> -->
     </div>
 </form>
+
+<button class="btn grey darken-3 right" (click)="reloadWindow()">reload</button>
