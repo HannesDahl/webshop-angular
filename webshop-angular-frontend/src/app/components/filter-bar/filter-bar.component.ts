@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { HttpService } from '../../services/http.service';
 import { QueryFilterService } from '../../services/query-filter.service';
 
 @Component({
@@ -17,31 +18,54 @@ export class FilterBarComponent implements OnInit {
     @ViewChild('maxInput') public maxInput: ElementRef;
     @ViewChild('priceSlider') public priceSlider: ElementRef;
     @Input() products: any;
-    mySubscription
+    categories: any;
+    mySubscription: any;
+    categoryName: string;
 
-    constructor(private router: Router, private QueryFilter: QueryFilterService) {
+    constructor(private router: Router, private QueryFilter: QueryFilterService, private _http: HttpService) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
-
         this.mySubscription = this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
-                // Trick the Router into believing it's last link wasn't previously loaded
                 this.router.navigated = false;
             }
         });
     }
 
+    ngOnDestroy() {
+        if (this.mySubscription) {
+            this.mySubscription.unsubscribe();
+        }
+    }
+
     public url = window.location.pathname;
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.categoryName = window.location.href.replace(/^.*[\\\/]/, '');
+        this.categoryName = this.categoryName.replace(/\?.*$/, '');
+        this._http.getCategoryPrices(this.categoryName).subscribe(
+            this._onCategoryPricesLoaded.bind(this),
+            this._onCategoryPricesLoadFailed.bind(this));
+    }
+
+    private _onCategoryPricesLoaded(data: any): void {
+        this.categories = data;
+        console.log(this.categories);
+    }
+
+    private _onCategoryPricesLoadFailed(error: any): void {
+        console.error(error);
+    }
 
     ngAfterViewInit(): void {
         // @ts-ignore
         M.FormSelect.init(this.selectElement.nativeElement);
 
         let prices = [];
-        for (let i = 0; i < this.products.length; i++) {
-            prices.push(this.products[i].price);
+        if (this.categories) {
+            for (let i = 0; i < this.categories.length; i++) {
+                prices.push(this.categories[i].price);
+            }
         }
         let minPrice = (prices.sort(function (a, b) { return a - b }))[0];
         let maxPrice = (prices.sort(function (a, b) { return b - a }))[0];
@@ -61,6 +85,7 @@ export class FilterBarComponent implements OnInit {
             step: 1,
             orientation: 'horizontal',
             tooltips: true,
+            disabled: true,
             range: {
                 'min': minPrice,
                 'max': maxPrice
@@ -71,6 +96,7 @@ export class FilterBarComponent implements OnInit {
                 decimals: 0
             })
         });
+
         // @ts-ignore
         slider.noUiSlider.on('update', () => {
             // @ts-ignore
@@ -78,29 +104,17 @@ export class FilterBarComponent implements OnInit {
 
             this.minInput.nativeElement.value = currentSliderValues[0];
             this.maxInput.nativeElement.value = currentSliderValues[1];
-        });
-    }
 
-    ngOnDestroy() {
-        if (this.mySubscription) {
-            this.mySubscription.unsubscribe();
-        }
+            history.pushState(null, null, this.url + this.QueryFilter.handleQueryParams(location.search, `pr=${currentSliderValues[0]}-${currentSliderValues[1]}`));
+        });
     }
 
     public sortFilter(e) {
         if (e.target.value) {
-
             const queryValue = this.QueryFilter.handleQueryParams(location.search, `${e.target.name}=${e.target.value}`);
-
-            console.log(queryValue);
-
             history.pushState(null, null, this.url + queryValue);
-
-            // this.router.navigate([this.url], queryValue);
-
-            // this.router.navigate([this.url], {
-            //     queryParams: {}
-            // });
+        } else {
+            history.pushState(null, null, this.url + this.QueryFilter.removeQueryParam(location.search, `${e.target.name}`));
         }
     }
 

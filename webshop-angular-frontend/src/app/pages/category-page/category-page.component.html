@@ -3,7 +3,7 @@
 <ng-template *ngIf="products" [ngIf]="products.length > 0" [ngIfElse]="noProducts">
     <div class="container products">
         <div class="row">
-            <app-filter-bar *ngIf="products.length > 1" [products]="products"></app-filter-bar>
+            <app-filter-bar [products]="products"></app-filter-bar>
         </div>
         <div class="row">
             <h3 #categoryNameHeader class="mb1 mt3">{{ _capitalize(categoryName) }} ({{ productsLength }})</h3>

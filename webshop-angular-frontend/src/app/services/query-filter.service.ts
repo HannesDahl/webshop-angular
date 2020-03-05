@@ -9,28 +9,6 @@ export class QueryFilterService {
 
     constructor() { }
 
-    // public handleQueryParams = (query, newQuery) => {
-    //     let objectValues = {}
-
-    //     var parsed = queryString.parse(query);
-    //     newQuery = newQuery.split('=');
-    //     let key = newQuery[0];
-    //     let value = newQuery[1];
-
-    //     console.log(key);
-    //     console.log(value);
-
-    //     let queryParams = { [key]: value }
-
-    //     objectValues = { queryParams }
-
-    //     let object = {
-    //         queryParams
-    //     }
-
-    //     return object
-    // }
-
     public handleQueryParams = (query, newQuery) => {
         var parsed = queryString.parse(query);
         newQuery = newQuery.split('=');
@@ -40,5 +18,13 @@ export class QueryFilterService {
         let txt = '?'
         txt += queryString.stringify(parsed);
         return txt
+    }
+
+    public removeQueryParam = (query, queryToDel) => {
+        var parsed = queryString.parse(query);
+        delete parsed[queryToDel];
+        let txt = '?';
+        txt += queryString.stringify(parsed);
+        return txt;
     }
 }

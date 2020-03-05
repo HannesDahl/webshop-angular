@@ -29,4 +29,18 @@ export class HttpService {
         return this.http.get(environment.serverUrl + '/product/' + $event);
     }
 
+    getCategories() {
+        return this.http.get(environment.serverUrl + '/categories/');
+    }
+
+    getCategoryPrices($event) {
+        return this.http.get(environment.serverUrl + '/categoryprice/' + $event);
+    }
+
+    postProduct(productname, productprice, productdescription, selectedCategories, imgName) {
+        return this.http.post(environment.serverUrl + '/addproduct', { name: productname, price: productprice, description: productdescription, categories: selectedCategories, imageName: imgName }).subscribe(data => {
+            return
+        });
+    }
+
 }

@@ -44,6 +44,33 @@ app.get('/randomproducts', function (req, res) {
     });
 });
 
+app.get('/categoryprice/:category', function (req, res) {
+    let categoryName = req.params.category;
+
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database.');
+    });
+
+    db.serialize(() => {
+        db.get(`SELECT id FROM categories WHERE name = ?`, [categoryName], (err, row) => {
+            if (err) console.error(err.message)
+
+            let categoryId = row.id;
+            let sqlCode = `SELECT price FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`;
+
+            db.all(sqlCode, [categoryId], (err, productsprice) => {
+                if (err) console.error(err.message);
+                res.json(productsprice);
+            });
+            db.close((err) => {
+                if (err) console.error(err.message);
+                console.log('Closed the database connection.');
+            });
+        });
+    });
+})
+
 app.get('/category/:category', function (req, res) {
     let categoryName = req.params.category;
 
@@ -60,6 +87,14 @@ app.get('/category/:category', function (req, res) {
             let sqlCode = `SELECT * FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`;
 
             if (req.query) {
+                if (req.query.pr) {
+                    let arr = req.query.pr.split('-');
+                    let firstValue = arr[0];
+                    let secondValue = arr[1];
+
+                    sqlCode += ` AND price BETWEEN ${firstValue} and ${secondValue}`
+                }
+
                 if (req.query.s) {
                     sqlCode += ` AND name LIKE '%${req.query.s}%'`
                 }
@@ -132,6 +167,47 @@ app.get('/search/:searchvalue', function (req, res) {
     db.close((err) => {
         if (err) return console.error(err.message);
         console.log('Closed the database connection.');
+    });
+});
+
+app.get('/categories', function (req, res) {
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database.');
+    });
+
+    db.serialize(() => {
+        db.all(`SELECT * FROM categories`, (err, categories) => {
+            if (err) console.error(err.message);
+            res.json(categories);
+        });
+    });
+    db.close((err) => {
+        if (err) console.error(err.message);
+        console.log('Closed the database connection.');
+    });
+});
+
+app.post('/addproduct', function (req, res) {
+    console.log(req.body);
+
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database');
+    });
+    let productvals = [req.body.name, req.body.name.replace(/\s+/g, '-'), JSON.parse(req.body.price), req.body.description, req.body.imageName];
+    db.serialize(() => {
+        db.run(`INSERT INTO products (name, url, price, description, image) VALUES(?, ?, ?, ?, ?)`, productvals, function (err) {
+            if (err) console.error(err);
+
+            let categories = req.body.categories
+            for (let i = 0; i < categories.length; i++) {
+                db.run(`INSERT INTO product_categories (product_id, category_id) VALUES(?, ?)`, [this.lastID, categories[i]], function (err) {
+                    if (err) console.error(err.message);
+                    console.log(`A row has inserted with rowid ${this.lastID}`);
+                });
+            }
+        });
     });
 });
 

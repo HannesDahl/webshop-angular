@@ -15,6 +15,8 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PreloaderComponent } from './components/preloader/preloader.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
+import { ProductlistComponent } from './pages/adminpage/productlist/productlist.component';
+import { AddproductComponent } from './pages/adminpage/addproduct/addproduct.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,9 @@ import { FilterBarComponent } from './components/filter-bar/filter-bar.component
         SearchResultsComponent,
         PreloaderComponent,
         FilterBarComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        ProductlistComponent,
+        AddproductComponent
     ],
     imports: [
         BrowserModule,
