@@ -33,6 +33,13 @@ main {
     outline: none;
 }
 
+// ADMIN PAGE
+.admin-panel {
+    width: calc(100% - 250px);
+    margin-left: auto;
+    padding: 0 50px;
+}
+
 @media(max-width:1200px) {
     .products {
         .card .card-image img {

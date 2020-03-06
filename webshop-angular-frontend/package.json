@@ -19,9 +19,11 @@
     "@angular/platform-browser": "~9.0.1",
     "@angular/platform-browser-dynamic": "~9.0.1",
     "@angular/router": "~9.0.1",
+    "chart.js": "^2.9.3",
     "nouislider": "^14.1.1",
     "query-string": "^6.11.1",
     "rxjs": "~6.5.4",
+    "simple-datatables": "^2.1.9",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -44,6 +46,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.7.5"
+    "typescript": "^3.7.5"
   }
 }

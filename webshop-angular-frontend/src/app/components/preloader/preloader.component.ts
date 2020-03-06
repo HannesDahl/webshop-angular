@@ -16,6 +16,12 @@ export class PreloaderComponent implements OnInit {
         if (window.location.pathname == '/') {
             this.loaderWrapper.nativeElement.style.width = '70%';
         }
+
+        if (window.location.pathname.includes('/adminpage')) {
+            this.loaderWrapper.nativeElement.style.width = '85%';
+            this.loaderWrapper.nativeElement.style.right = '0';
+        }
+
         this.remove(this.loaderWrapper.nativeElement);
     }
 

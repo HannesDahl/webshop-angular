@@ -12,7 +12,6 @@ export class AddproductComponent implements OnInit {
 	@ViewChild('priceInput') public priceInput: ElementRef;
 	@ViewChild('descriptionInput') public descriptionInput: ElementRef;
 	@ViewChild('imageInput') public imageInput: ElementRef;
-
 	@Output() categories: any;
 	el: ElementRef;
 

@@ -18,6 +18,10 @@ import { FilterBarComponent } from './components/filter-bar/filter-bar.component
 import { ProductlistComponent } from './pages/adminpage/productlist/productlist.component';
 import { AddproductComponent } from './pages/adminpage/addproduct/addproduct.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { PublicViewComponent } from './pages/public-view/public-view.component';
+import { AdminViewComponent } from './pages/admin-view/admin-view.component';
+import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.component';
+import { DashboardComponent } from './pages/adminpage/dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -34,12 +38,16 @@ import { CartComponent } from './pages/cart/cart.component';
         PageNotFoundComponent,
         ProductlistComponent,
         AddproductComponent,
-        CartComponent
+        CartComponent,
+        PublicViewComponent,
+        AdminViewComponent,
+        AdminSidenavComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

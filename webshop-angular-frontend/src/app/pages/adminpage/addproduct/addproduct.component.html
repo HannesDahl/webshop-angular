@@ -1,51 +1,47 @@
-<app-preloader></app-preloader>
+<div id="add-product" class="admin-panel">
+    <h2 class="center mt2">Add product</h2>
 
-<div class="container products">
-    <div id="add-product" class="add-product">
-        <h2 class="center mt4">Add product</h2>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <input #nameInput name="name" id="name" type="text" class="validate" required>
-                <label for="name">Product name</label>
-            </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input #nameInput name="name" id="name" type="text" class="validate" required>
+            <label for="name">Product name</label>
         </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <input #priceInput name="price" id="price" type="number" class="validate" required>
-                <label for="price">Price</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <input #descriptionInput name="description" id="description" type="text" class="validate" required>
-                <label for="description">Small description</label>
-            </div>
-        </div>
-
-        <div class="file-field input-field">
-            <div class="btn grey darken-3">
-                <span>Image</span>
-                <input #imageInput name="image" type="file" required>
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
-
-        <h4 class="mt2">Select category/categories</h4>
-        <div class="m5">
-            <p *ngFor="let categorie of categories">
-                <label>
-                    <input class="checkbox" name="check" value="{{ categorie.id }}" type="checkbox">
-                    <span>{{ categorie.name }}</span>
-                </label>
-            </p>
-        </div>
-        <input #selectedCategories type="text" name="selectedCategories" id="selectedCategories" value="" hidden>
-
-        <button (click)="addProduct()" id="submit" class="btn grey darken-3">Add product</button>
     </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input #priceInput name="price" id="price" type="number" class="validate" required>
+            <label for="price">Price</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input #descriptionInput name="description" id="description" type="text" class="validate" required>
+            <label for="description">Small description</label>
+        </div>
+    </div>
+
+    <div class="file-field input-field">
+        <div class="btn grey darken-3">
+            <span>Image</span>
+            <input #imageInput name="image" type="file" required>
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+        </div>
+    </div>
+
+    <h4 class="mt2">Select category/categories</h4>
+    <div class="m5">
+        <p *ngFor="let categorie of categories">
+            <label>
+                <input class="checkbox" name="check" value="{{ categorie.id }}" type="checkbox">
+                <span>{{ categorie.name }}</span>
+            </label>
+        </p>
+    </div>
+    <input #selectedCategories type="text" name="selectedCategories" id="selectedCategories" value="" hidden>
+
+    <button (click)="addProduct()" id="submit" class="btn grey darken-3 mb5">Add product</button>
 </div>
