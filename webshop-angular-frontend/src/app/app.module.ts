@@ -17,6 +17,7 @@ import { PreloaderComponent } from './components/preloader/preloader.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { ProductlistComponent } from './pages/adminpage/productlist/productlist.component';
 import { AddproductComponent } from './pages/adminpage/addproduct/addproduct.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { AddproductComponent } from './pages/adminpage/addproduct/addproduct.com
         FilterBarComponent,
         PageNotFoundComponent,
         ProductlistComponent,
-        AddproductComponent
+        AddproductComponent,
+        CartComponent
     ],
     imports: [
         BrowserModule,

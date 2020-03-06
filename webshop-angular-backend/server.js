@@ -59,9 +59,9 @@ app.get('/categoryprice/:category', function (req, res) {
             let categoryId = row.id;
             let sqlCode = `SELECT price FROM products AS a, product_categories AS b WHERE b.category_id = ? AND a.id = b.product_id`;
 
-            db.all(sqlCode, [categoryId], (err, productsprice) => {
+            db.all(sqlCode, [categoryId], (err, productsprices) => {
                 if (err) console.error(err.message);
-                res.json(productsprice);
+                res.json(productsprices);
             });
             db.close((err) => {
                 if (err) console.error(err.message);

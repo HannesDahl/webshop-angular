@@ -7,6 +7,7 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
 import { AddproductComponent } from './pages/adminpage/addproduct/addproduct.component';
 import { ProductlistComponent } from './pages/adminpage/productlist/productlist.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'category/:categoryname', component: CategoryPageComponent },
   { path: `product/:productname`, component: ProductPageComponent },
   { path: `search/:searchvalue`, component: SearchResultsComponent },
+  { path: 'cart', component: CartComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -8,7 +8,7 @@
         <div #priceSlider id="price-slider"></div>
         <div class="price-range-filter">
             <input type="number" class="priceInput" #minInput>€ - <input type="number" class="priceInput" #maxInput>€
-            <a href="#" class="btn" id="setprice">Set price range</a>
+            <a href="#" class="btn" (click)="setPrice($event)" id="setprice">Set price range</a>
         </div>
     </div>
 
