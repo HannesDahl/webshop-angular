@@ -41,6 +41,10 @@ export class HttpService {
         return this.http.get(environment.serverUrl + '/allproducts');
     }
 
+    getCartProducts(query) {
+        return this.http.get(environment.serverUrl + '/cart' + query);
+    }
+
     postProduct(productname, productprice, productdescription, selectedCategories, imgName) {
         return this.http.post(environment.serverUrl + '/addproduct', { name: productname, price: productprice, description: productdescription, categories: selectedCategories, imageName: imgName }).subscribe(data => {
             return

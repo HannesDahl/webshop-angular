@@ -1,3 +1,5 @@
+<app-preloader></app-preloader>
+
 <div class="container cart py5">
     <div class="my5">
         <table class="cart-table">
@@ -13,14 +15,34 @@
             </thead>
 
             <tbody id="cart-products">
-
+                <tr *ngFor="let product of products">
+                    <td>
+                        <i (click)="removeFromCart($event, product.id)"
+                            class="material-icons item-remove-button">close</i>
+                    </td>
+                    <td>
+                        <img src="assets/images/{{ product.image }}">
+                    </td>
+                    <td class="product-name">
+                        <a routerLink="/product/{{ product.url }}">
+                            {{product.name}}
+                        </a>
+                    </td>
+                    <td>{{ product.price }}€</td>
+                    <td>
+                        <input type="number" min="1" max="99" value="1" #quantityInput>
+                    </td>
+                    <td #cartProductPrice class="cart-product-price">
+                        {{ roundToTwoDecimals(product.price * quantityInput.value) }}€
+                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="row mt5">
             <div class="col s5">
                 <div class="input-field col s6">
                     <input id="coupon-code" type="text" class="validate">
-                    <label class="active" for="coupon-code">Coupon code</label>
+                    <label for="coupon-code">Coupon code</label>
                 </div>
                 <a href="#" class="btn mt3 grey darken-3">apply coupon</a>
             </div>
@@ -31,23 +53,22 @@
                         <thead>
                             <tr>
                                 <th>Subtotal</th>
-                                <td id="cart-subtotal"></td>
+                                <td #cartSubtotal>{{ roundToTwoDecimals(total) }}</td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th>Moms (24%)</th>
-                                <td id="cart-moms"></td>
+                                <td #cartMoms>{{ roundToTwoDecimals(total * 0.24) }}</td>
                             </tr>
                             <tr>
                                 <th>Total</th>
-                                <td id="cart-total"></td>
-
+                                <td #cartTotal>{{ roundToTwoDecimals(total) }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <a href="/checkout" class="btn grey darken-3 mt3">Proceed to checkout</a>
+                <a routerLink="/checkout" class="btn grey darken-3 mt3">Proceed to checkout</a>
             </div>
         </div>
     </div>

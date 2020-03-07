@@ -39,8 +39,21 @@
         align-items: center;
         justify-content: space-between;
 
-        .btn.grey.darken-3.white-text {
-            font-size: .9rem;
+        i {
+            padding: 16px;
+            color: #fff;
+            background-color: #424242;
+            text-decoration: none;
+            text-align: center;
+            letter-spacing: .5px;
+            -webkit-transition: background-color .2s ease-out;
+            transition: background-color .2s ease-out;
+            cursor: pointer;
+            border: none;
+            border-radius: 2px;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 16px;
         }
     }
 }

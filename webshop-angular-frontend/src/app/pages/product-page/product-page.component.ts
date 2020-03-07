@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
+import { AddToCartService } from '../../services/add-to-cart.service';
 
 @Component({
     selector: 'app-product-page',
@@ -9,7 +10,10 @@ import { HttpService } from '../../services/http.service';
 export class ProductPageComponent implements OnInit {
     product: any;
 
-    constructor(private _http: HttpService) { }
+    constructor(
+        private _http: HttpService,
+        private _cart: AddToCartService
+    ) { }
 
     private url = window.location.href.replace(/^.*[\\\/]/, '');
     ngOnInit() {
@@ -25,5 +29,10 @@ export class ProductPageComponent implements OnInit {
 
     private _onProductsLoadFailed(error: any): void {
         console.log(error);
+    }
+
+    public addToCart(e) {
+        e.preventDefault();
+        this._cart.addToCart(this.product.id);
     }
 }

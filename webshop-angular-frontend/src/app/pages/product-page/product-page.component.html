@@ -10,7 +10,7 @@
                 <h4>{{ product.name }}</h4>
                 <p>{{ product.description }}</p>
                 <p class="page-price">{{ product.price }}€</p>
-                <a href="#" class="btn grey darken-3">Add to cart</a>
+                <a href="#" (click)="addToCart($event)" class="btn grey darken-3">Add to cart</a>
             </div>
         </div>
     </div>

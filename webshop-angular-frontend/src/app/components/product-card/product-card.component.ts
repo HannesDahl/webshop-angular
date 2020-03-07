@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AddToCartService } from '../../services/add-to-cart.service';
 
 @Component({
     selector: 'app-product-card',
@@ -10,12 +11,15 @@ export class ProductCardComponent implements OnInit {
     @Input() public product: any;
     @Input() public randomProducts: any;
 
-    constructor() { }
+    constructor(
+        private _cart: AddToCartService
+    ) { }
 
     ngOnInit() { }
 
-    public replaceSpaces(str: string): string {
-        return str.replace(/\s/g, '-');
+    addToCart(e) {
+        e.preventDefault();
+        this._cart.addToCart(this.product.id);
     }
 
 }

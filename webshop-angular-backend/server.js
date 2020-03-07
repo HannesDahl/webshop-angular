@@ -170,6 +170,27 @@ app.get('/search/:searchvalue', function (req, res) {
     });
 });
 
+app.get('/cart', function (req, res) {
+    let productID = req.query.id;
+
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database');
+    });
+
+    db.serialize(() => {
+        db.all(`SELECT * FROM products WHERE id IN (${productID})`, (err, products) => {
+            if (err) console.error(err.message);
+            res.json(products);
+        });
+    });
+
+    db.close((err) => {
+        if (err) console.error(err.message);
+        console.log('Closed the database connection.');
+    });
+});
+
 app.get('/categories', function (req, res) {
     let db = new sqlite3.Database('products.db', sqlite3.OPEN_READONLY, (err) => {
         if (err) console.error(err.message);
