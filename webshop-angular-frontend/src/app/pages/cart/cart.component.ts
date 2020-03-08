@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
-import { QueryFilterService } from '../../services/query-filter.service';
+import { CartService } from 'src/app/services/cart.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
 
 	constructor(
 		private _http: HttpService,
-		private QueryFilter: QueryFilterService,
+		public _cart: CartService,
 		private router: Router
 	) {
 		this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -41,13 +41,19 @@ export class CartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		let num = 0;
-		while (localStorage.getItem('key' + num)) {
-			this.cartProducts.push(localStorage.getItem('key' + num));
-			num++;
+		let key = this._cart.key;
+		let itemStorage = localStorage.getItem(key);
+		itemStorage = JSON.parse(itemStorage);
+
+		if (itemStorage) {
+			for (let i = 0; i < itemStorage.length; i++) {
+				// @ts-ignore
+				this.cartProducts.push(itemStorage[i].id);
+			}
 		}
 
 		this.cartItemsString = `?id=${this.cartProducts}`;
+		window.scrollTo(0, 0);
 	}
 
 	ngAfterViewInit(): void {
@@ -94,9 +100,15 @@ export class CartComponent implements OnInit {
 		}
 	}
 
-	public removeFromCart(e, product) {
+	public removeFromCart(e, id) {
 		e.target.parentElement.parentElement.remove();
-		console.log(product);
+		this._cart.removeFromCart(id);
+	}
+
+	public clearCart(e) {
+		e.preventDefault();
+		this.products = [];
+		localStorage.clear();
 	}
 
 }

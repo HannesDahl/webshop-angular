@@ -2,42 +2,50 @@
 
 <div class="container cart py5">
     <div class="my5">
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th class="product-remove">&nbsp;</th>
-                    <th class="product-thumbnail">&nbsp;</th>
-                    <th class="product-name">Name</th>
-                    <th class="product-price">Price</th>
-                    <th class="product-quantity">Quantity</th>
-                    <th class="product-subtotal">Subtotal</th>
-                </tr>
-            </thead>
+        <ng-template *ngIf="products" [ngIf]="products.length >= 1" [ngIfElse]="noProducts">
+            <a href="#" class="btn grey darken-3" (click)="clearCart($event)">clear cart</a>
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th class="product-remove">&nbsp;</th>
+                        <th class="product-thumbnail">&nbsp;</th>
+                        <th class="product-name">Name</th>
+                        <th class="product-price">Price</th>
+                        <th class="product-quantity">Quantity</th>
+                        <th class="product-subtotal">Subtotal</th>
+                    </tr>
+                </thead>
 
-            <tbody id="cart-products">
-                <tr *ngFor="let product of products">
-                    <td>
-                        <i (click)="removeFromCart($event, product.id)"
-                            class="material-icons item-remove-button">close</i>
-                    </td>
-                    <td>
-                        <img src="assets/images/{{ product.image }}">
-                    </td>
-                    <td class="product-name">
-                        <a routerLink="/product/{{ product.url }}">
-                            {{product.name}}
-                        </a>
-                    </td>
-                    <td>{{ product.price }}€</td>
-                    <td>
-                        <input type="number" min="1" max="99" value="1" #quantityInput>
-                    </td>
-                    <td #cartProductPrice class="cart-product-price">
-                        {{ roundToTwoDecimals(product.price * quantityInput.value) }}€
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <tbody id="cart-products">
+                    <tr *ngFor="let product of products">
+                        <td>
+                            <i (click)="removeFromCart($event, product.id)"
+                                class="material-icons item-remove-button">close</i>
+                        </td>
+                        <td>
+                            <img src="assets/images/{{ product.image }}">
+                        </td>
+                        <td class="product-name">
+                            <a routerLink="/product/{{ product.url }}">
+                                {{product.name}}
+                            </a>
+                        </td>
+                        <td>{{ product.price }}€</td>
+                        <td>
+                            <input type="number" min="1" max="99" value="1" #quantityInput>
+                        </td>
+                        <td #cartProductPrice class="cart-product-price">
+                            {{ roundToTwoDecimals(product.price * quantityInput.value) }}€
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #noProducts>
+            <h4 class="center my5">No products added to cart</h4>
+        </ng-template>
+
         <div class="row mt5">
             <div class="col s5">
                 <div class="input-field col s6">

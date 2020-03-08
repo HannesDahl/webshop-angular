@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { AddToCartService } from '../../services/add-to-cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
     selector: 'app-product-page',
@@ -12,7 +12,7 @@ export class ProductPageComponent implements OnInit {
 
     constructor(
         private _http: HttpService,
-        private _cart: AddToCartService
+        private _cart: CartService
     ) { }
 
     private url = window.location.href.replace(/^.*[\\\/]/, '');

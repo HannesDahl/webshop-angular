@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AddToCartService } from '../../services/add-to-cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
     selector: 'app-product-card',
@@ -12,14 +12,17 @@ export class ProductCardComponent implements OnInit {
     @Input() public randomProducts: any;
 
     constructor(
-        private _cart: AddToCartService
+        private _cart: CartService
     ) { }
 
     ngOnInit() { }
 
     addToCart(e) {
         e.preventDefault();
-        this._cart.addToCart(this.product.id);
+        let id;
+        if (this.product.product_id) id = this.product.product_id;
+        else id = this.product.id;
+        this._cart.addToCart(id);
     }
 
 }
