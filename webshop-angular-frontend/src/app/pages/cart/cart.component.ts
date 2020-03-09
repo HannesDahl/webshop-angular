@@ -105,6 +105,22 @@ export class CartComponent implements OnInit {
 		this._cart.removeFromCart(id);
 	}
 
+	public quantityInputValue(id) {
+		let sum = 0;
+		let cartItems = localStorage.getItem(this._cart.key);
+		cartItems = JSON.parse(cartItems);
+
+		for (let i = 0; i < cartItems.length; i++) {
+			// @ts-ignore
+			if (id == cartItems[i].id) {
+				// @ts-ignore
+				sum = cartItems[i].qty
+			}
+		}
+
+		return sum;
+	}
+
 	public clearCart(e) {
 		e.preventDefault();
 		this.products = [];

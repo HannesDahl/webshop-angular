@@ -11,20 +11,33 @@ export class CartService {
 	constructor() { }
 
 	public addToCart(id) {
-		this.array = [];
-		let allAddedProducts = localStorage.getItem(this.key);
-		allAddedProducts = JSON.parse(allAddedProducts);
-		if (allAddedProducts != null) {
-			for (let i = 0; i < allAddedProducts.length; i++) {
-				this.array.push(allAddedProducts[i])
+		let currentCart = localStorage.getItem(this.key);
+		currentCart = JSON.parse(currentCart);
+
+		let duplicatteStatus = false;
+		if (currentCart) {
+			for (let i = 0; i < currentCart.length; i++) {
+				// @ts-ignore
+				if (currentCart[i].id === id) {
+					// @ts-ignore
+					currentCart[i].qty++;
+					duplicatteStatus = true;
+					M.toast({ html: 'Increased quantity of added product!' });
+					break;
+				}
 			}
+			if (duplicatteStatus === false) {
+				// @ts-ignore
+				currentCart.push({ id: id, qty: 1 });
+				M.toast({ html: 'Added to cart!' });
+			}
+		} else {
+			// @ts-ignore
+			currentCart = [{ id: id, qty: 1 }];
+			M.toast({ html: 'Added to cart!' });
 		}
 
-		this.array.push({ id: id });
-		let localStorageObject = JSON.stringify(this.array);
-		localStorage.setItem(this.key, localStorageObject);
-
-		M.toast({ html: 'Added to cart!' });
+		localStorage.setItem(this.key, JSON.stringify(currentCart));
 	}
 
 	public removeFromCart(id) {

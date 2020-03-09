@@ -32,7 +32,8 @@
                         </td>
                         <td>{{ product.price }}€</td>
                         <td>
-                            <input type="number" min="1" max="99" value="1" #quantityInput>
+                            <input type="number" min="1" max="99" value="{{ quantityInputValue(product.id) }}"
+                                #quantityInput>
                         </td>
                         <td #cartProductPrice class="cart-product-price">
                             {{ roundToTwoDecimals(product.price * quantityInput.value) }}€
