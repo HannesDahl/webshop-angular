@@ -5,7 +5,6 @@ declare var M: any;
 	providedIn: 'root'
 })
 export class CartService {
-	private array: any = [];
 	public key = 'cart-38111152238128';
 
 	constructor() { }
@@ -38,9 +37,5 @@ export class CartService {
 		}
 
 		localStorage.setItem(this.key, JSON.stringify(currentCart));
-	}
-
-	public removeFromCart(id) {
-		console.log(id);
 	}
 }

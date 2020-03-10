@@ -41,44 +41,48 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="row mt5">
+                <div class="col s5">
+                    <div class="input-field col s6">
+                        <input id="coupon-code" type="text" class="validate">
+                        <label for="coupon-code">Coupon code</label>
+                    </div>
+                    <a href="#" class="btn mt3 grey darken-3">apply coupon</a>
+                </div>
+                <div class="col s4 right">
+                    <div class="total-cost">
+                        <h4>Cart Totals</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <td #cartSubtotal>{{ roundToTwoDecimals(total) }}€</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Moms (24%)</th>
+                                    <td #cartMoms>{{ roundToTwoDecimals(total * 0.24) }}€</td>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <td #cartTotal>{{ roundToTwoDecimals(total) }}€</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a routerLink="/checkout" class="btn grey darken-3 mt3">Proceed to checkout</a>
+                </div>
+            </div>
         </ng-template>
 
         <ng-template #noProducts>
-            <h4 class="center my5">No products added to cart</h4>
+            <div class="center">
+                <i class="material-icons mt1" style="font-size: 10rem; color: #ddd;">remove_shopping_cart</i>
+                <h4 class="center mb2">Cart is empty</h4>
+                <a routerLink="/" class="btn-large grey darken-3 mt2 mb5">Back to store</a>
+            </div>
         </ng-template>
-
-        <div class="row mt5">
-            <div class="col s5">
-                <div class="input-field col s6">
-                    <input id="coupon-code" type="text" class="validate">
-                    <label for="coupon-code">Coupon code</label>
-                </div>
-                <a href="#" class="btn mt3 grey darken-3">apply coupon</a>
-            </div>
-            <div class="col s4 right">
-                <div class="total-cost">
-                    <h4>Cart Totals</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Subtotal</th>
-                                <td #cartSubtotal>{{ roundToTwoDecimals(total) }}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>Moms (24%)</th>
-                                <td #cartMoms>{{ roundToTwoDecimals(total * 0.24) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Total</th>
-                                <td #cartTotal>{{ roundToTwoDecimals(total) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <a routerLink="/checkout" class="btn grey darken-3 mt3">Proceed to checkout</a>
-            </div>
-        </div>
     </div>
 </div>

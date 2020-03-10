@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Router, NavigationEnd } from '@angular/router';
+declare var M: any;
 
 @Component({
 	selector: 'app-cart',
@@ -102,14 +103,31 @@ export class CartComponent implements OnInit {
 
 	public removeFromCart(e, id) {
 		e.target.parentElement.parentElement.remove();
-		this._cart.removeFromCart(id);
+		let currentCart = localStorage.getItem(this._cart.key);
+		currentCart = JSON.parse(currentCart);
+
+		for (let i = 0; i < currentCart.length; i++) {
+			// @ts-ignore
+			if (id === currentCart[i].id) {
+				// @ts-ignore
+				currentCart.splice(i, 1);
+			}
+		}
+
+		// @ts-ignore
+		if (currentCart.length === 0) {
+			this.products = currentCart;
+		}
+		currentCart = JSON.stringify(currentCart);
+		localStorage.setItem(this._cart.key, currentCart);
+
+		M.toast({ html: 'Removed from cart' });
 	}
 
 	public quantityInputValue(id) {
 		let sum = 0;
 		let cartItems = localStorage.getItem(this._cart.key);
 		cartItems = JSON.parse(cartItems);
-
 		for (let i = 0; i < cartItems.length; i++) {
 			// @ts-ignore
 			if (id == cartItems[i].id) {
@@ -117,14 +135,13 @@ export class CartComponent implements OnInit {
 				sum = cartItems[i].qty
 			}
 		}
-
 		return sum;
 	}
 
 	public clearCart(e) {
 		e.preventDefault();
 		this.products = [];
-		localStorage.clear();
+		localStorage.setItem(this._cart.key, '[]');
 	}
 
 }
