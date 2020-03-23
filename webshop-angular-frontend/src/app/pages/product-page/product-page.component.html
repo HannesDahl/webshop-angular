@@ -3,10 +3,20 @@
 <div class="container" *ngIf="product">
     <div class="row">
         <div class="product-page">
-            <div class="col s5">
-                <img *ngIf="product.image" src="assets/images/{{ product.image }}">
+            <div class="col s6 left-side">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let image of imagesUrl">
+                            <img [src]="image | async" alt="{{ product.name }}">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination swiper-pagination-black"></div>
+
+                    <div class="swiper-button-prev swiper-button-black"></div>
+                    <div class="swiper-button-next swiper-button-black"></div>
+                </div>
             </div>
-            <div class="col s7">
+            <div class="col s6 right-side">
                 <h4>{{ product.name }}</h4>
                 <p>{{ product.description }}</p>
                 <p class="page-price">{{ product.price }}€</p>

@@ -13,10 +13,6 @@ export class PreloaderComponent implements OnInit {
     ngOnInit(): void { }
 
     ngAfterViewInit(): void {
-        if (window.location.pathname == '/') {
-            this.loaderWrapper.nativeElement.style.width = '70%';
-        }
-
         if (window.location.pathname.includes('/adminpage')) {
             this.loaderWrapper.nativeElement.style.width = '85%';
             this.loaderWrapper.nativeElement.style.right = '0';
@@ -36,6 +32,6 @@ export class PreloaderComponent implements OnInit {
                     requestAnimationFrame(fade);
                 }
             })();
-        }, 250);
+        }, 500);
     }
 }

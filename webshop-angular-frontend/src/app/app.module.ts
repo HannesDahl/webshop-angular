@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,6 +25,7 @@ import { PublicViewComponent } from './pages/public-view/public-view.component';
 import { AdminViewComponent } from './pages/admin-view/admin-view.component';
 import { AdminSidenavComponent } from './components/admin-sidenav/admin-sidenav.component';
 import { DashboardComponent } from './pages/adminpage/dashboard/dashboard.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
     declarations: [
@@ -48,6 +52,8 @@ import { DashboardComponent } from './pages/adminpage/dashboard/dashboard.compon
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireStorageModule
     ],
     providers: [],
     bootstrap: [AppComponent]

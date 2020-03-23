@@ -1,3 +1,5 @@
+<app-preloader></app-preloader>
+
 <div class="container products">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -18,7 +20,6 @@
         <div class="swiper-button-prev swiper-button-black"></div>
         <div class="swiper-button-next swiper-button-black"></div>
     </div>
-    <app-preloader></app-preloader>
     <h2>We recommend:</h2>
     <div class="row">
         <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>

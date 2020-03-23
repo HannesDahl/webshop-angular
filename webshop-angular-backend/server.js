@@ -228,8 +228,6 @@ app.get('/allproducts', function (req, res) {
 });
 
 app.post('/addproduct', function (req, res) {
-    console.log(req.body);
-
     let db = new sqlite3.Database('products.db', sqlite3.OPEN_READWRITE, (err) => {
         if (err) console.error(err.message);
         console.log('Connected to the products database');
@@ -241,13 +239,31 @@ app.post('/addproduct', function (req, res) {
 
             let categories = req.body.categories
             for (let i = 0; i < categories.length; i++) {
-                db.run(`INSERT INTO product_categories (product_id, category_id) VALUES(?, ?)`, [this.lastID, categories[i]], function (err) {
-                    if (err) console.error(err.message);
-                    console.log(`A row has inserted with rowid ${this.lastID}`);
-                });
+                addToCategory(this.lastID, categories[i]);
             }
         });
     });
+    db.close((err) => {
+        if (err) console.error(err.message);
+        console.log('Closed the database connection.');
+    });
 });
+
+function addToCategory(id, category) {
+    let db = new sqlite3.Database('products.db', sqlite3.OPEN_READWRITE, (err) => {
+        if (err) console.error(err.message);
+        console.log('Connected to the products database');
+    });
+    db.serialize(() => {
+        db.run(`INSERT INTO product_categories (product_id, category_id) VALUES(?, ?)`, [id, category], function (err) {
+            if (err) console.error(err.message);
+            console.log(`A row has inserted with rowid ${this.lastID} with category ${category}`);
+        });
+    });
+    db.close((err) => {
+        if (err) console.error(err.message);
+        console.log('Closed the database connection.');
+    });
+}
 
 app.listen(port, () => console.log(`Webshop open on port ${port}!`));

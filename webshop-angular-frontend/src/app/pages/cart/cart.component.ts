@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
 declare var M: any;
 
 @Component({
@@ -19,11 +20,13 @@ export class CartComponent implements OnInit {
 	private url = window.location.pathname;
 	private mySubscription: any;
 	public total: number = 0;
+	downloading: boolean = false;
 
 	constructor(
 		private _http: HttpService,
 		public _cart: CartService,
-		private router: Router
+		private router: Router,
+		private storage: AngularFireStorage
 	) {
 		this.router.routeReuseStrategy.shouldReuseRoute = function () {
 			return false;
@@ -55,6 +58,19 @@ export class CartComponent implements OnInit {
 
 		this.cartItemsString = `?id=${this.cartProducts}`;
 		window.scrollTo(0, 0);
+	}
+
+	downloadImage(imgs) {
+		let ref;
+		if (this.downloading === false) {
+			this.downloading = true;
+			imgs = JSON.parse(imgs);
+			ref = this.storage.ref(imgs[0]);
+		} else {
+			ref = '';
+			this.downloading = false;
+		}
+		return ref.getDownloadURL();
 	}
 
 	ngAfterViewInit(): void {
