@@ -1,0 +1,55 @@
+<app-preloader></app-preloader>
+
+<div class="container wrapper">
+    <div class="profile-wrapper">
+        <div class="row" *ngIf="auth.user | async as user">
+            <div class="col s12 side-nav">
+                <ul class="tabs">
+                    <li class="tab">
+                        <a class="active" href="#test1">
+                            <span class="material-icons">perm_identity</span>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="tab">
+                        <a href="#test2">
+                            <span class="material-icons">list</span>
+                            Orders
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="profile" *ngIf="account">
+                <div id="test1" class="col s12">
+                    <h3>Hello {{ account.username }}!</h3>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="name" value="{{ account.username }}" type="text" class="validate">
+                                    <label for="name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password" value="{{ account.password }}" type="password"
+                                        class="validate">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input value="{{ user.email }}" id="email" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="test2" class="col s12">
+                    <h2>Orders</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="text-wrapper">
+            <h1>Sign up</h1>
+            <div class="form col s12">
+                <form>
+                    <div class="input-field">
+                        <label for="username">Username</label>
+                        <input #usernameInput type="text" name="username" id="username">
+                    </div>
+                    <div class="input-field">
+                        <label for="email">Email</label>
+                        <input #emailInput type="email" name="email" id="email">
+                    </div>
+                    <div class="input-field">
+                        <label for="password">Password</label>
+                        <input #passwordInput type="password" name="password" id="password">
+                    </div>
+                    <p>Already have an account? <a routerLink="/login" class="anchor">Login here!</a></p>
+                </form>
+            </div>
+            <div class="left buttons">
+                <a (click)="authService.registerWithMail(usernameInput.value, emailInput.value, passwordInput.value)"
+                    class="btn-large grey darken-3 mx1">Sign up</a>
+            </div>
+            <div class="or-row">
+                <div class="line"></div>
+                or
+                <div class="line"></div>
+            </div>
+            <div class="buttons">
+                <div class="pop-button google" (click)="authService.loginWithGoogle()">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="pop-button facebook">
+                    <i class="fab fa-facebook"></i>
+                </div>
+            </div>
+        </div>
+        <div class="image-wrapper">
+            <img src='https://dummyimage.com/600x800.png' alt='' />
+        </div>
+    </div>
+</div>
+
+<div class="back-button">
+    <span (click)="pageBack()" class="material-icons">arrow_back</span>
+</div>
+<div class="home-button">
+    <span (click)="home()" class="material-icons">home</span>
+</div>

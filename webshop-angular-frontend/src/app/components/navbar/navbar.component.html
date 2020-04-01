@@ -12,9 +12,21 @@
                     <a href="#" (click)="clickSearch($event)" class="black-text search-icon" id="search"><i
                             class="material-icons">search</i></a>
                 </div>
+                <div *ngIf="auth.user | async as user; else showLogin">
+                    <span class="material-icons dropdown-trigger profile-dropdown"
+                        data-target="profileDropdown">account_circle</span>
 
-                <a class="btn white black-text" routerLink="/login">Log in</a>
-                <a class="btn white black-text" routerLink="/signup">Sign up</a>
+                    <ul id='profileDropdown' class='dropdown-content'>
+                        <li><a routerLink="/profile">Profile</a></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li><a href="#" (click)="signOut($event)">Logout</a></li>
+                    </ul>
+                </div>
+
+                <ng-template #showLogin>
+                    <a class="btn white black-text" routerLink="/login">Log in</a>
+                    <a class="btn white black-text" routerLink="/signup">Sign up</a>
+                </ng-template>
             </ul>
             <a class="cart" routerLink="/cart">
                 <i class="material-icons">shopping_cart</i>

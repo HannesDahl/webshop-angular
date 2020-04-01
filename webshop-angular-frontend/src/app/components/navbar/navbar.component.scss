@@ -58,6 +58,16 @@
             }
         }
 
+        .dropdown-trigger {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 64px;
+            font-size: 3rem;
+            margin: 0 25px;
+            margin-right: 10px;
+        }
+
         .btn.white {
             width: 100px;
             margin: 0 5px;

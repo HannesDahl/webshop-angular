@@ -3,6 +3,9 @@ import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import 'firebase/storage';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AuthService } from 'src/app/services/auth.service';
 declare var M: any;
 
 @Component({
@@ -19,14 +22,34 @@ export class AddproductComponent implements OnInit {
 	el: ElementRef;
 	filePath: any;
 	imagesNamesArr: any = [];
+	adminOrNot: any;
 
 	constructor(
 		private _http: HttpService,
 		private router: Router,
-		private storage: AngularFireStorage
+		private storage: AngularFireStorage,
+		public afAuth: AngularFireAuth,
+		public afDatabase: AngularFireDatabase,
+		private authService: AuthService,
 	) { }
 
 	ngOnInit(): void {
+		this.afAuth.authState.subscribe((data) => {
+			if (data !== null) {
+				this.afAuth.user.subscribe((account) => {
+					let itemRef = this.afDatabase.object(`users/${account.uid}`);
+					itemRef.snapshotChanges().subscribe(data => {
+						let account: any = data.payload.val();
+						this.adminOrNot = account.admin;
+					});
+				});
+			}
+		});
+
+		if (this.adminOrNot === false) {
+			this.router.navigate(['/']);
+		}
+
 		this._http.getCategories().subscribe(
 			this._onCategoriesLoaded.bind(this),
 			this._onCategoriesLoadFailed.bind(this));

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +15,11 @@ export class HomeComponent implements OnInit {
 
     mySubscription: any;
 
-    constructor(private _http: HttpService, private router: Router) {
+    constructor(
+        private _http: HttpService,
+        private router: Router,
+        private funtions: AngularFireFunctions
+    ) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
@@ -45,6 +50,8 @@ export class HomeComponent implements OnInit {
             },
         });
     }
+
+    ngAfterViewInit(): void { }
 
     private _onProductsLoaded(data: any): void {
         this.products = data;

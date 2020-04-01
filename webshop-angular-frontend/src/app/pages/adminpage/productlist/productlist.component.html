@@ -1,3 +1,33 @@
 <div class="admin-panel">
     <table id="productsTable"></table>
 </div>
+
+<div id="productEditModal" class="modal modal-fixed-footer">
+    <form action="/save-changes" method="POST">
+        <div class="modal-content">
+            <h4>Edit product</h4>
+            <div class="row">
+                <div class="input-field col s2">
+                    <input id="productID" name="productID" class="validate" type="number" readonly>
+                    <label for="productID">ID</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="productName" name="productName" class="validate" type="text">
+                    <label class="active" for="productName">Name</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="productPrice" name="productPrice" class="validate" type="number">
+                    <label class="active" for="productPrice">Price</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="productDescription" name="productDescription" class="validate" type="text">
+                    <label class="active" for="productDescription">Description</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/close-modal" class="modal-close waves-effect btn-flat">close</a>
+            <button class="waves-effect btn-flat">save</button>
+        </div>
+    </form>
+</div>

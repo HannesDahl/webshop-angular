@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 declare var M: any;
 
 @Component({
@@ -9,15 +10,28 @@ declare var M: any;
 })
 export class NavbarComponent implements OnInit {
     @ViewChild('searchElement') public searchElement: ElementRef;
+    instance: any;
 
-    constructor(private router: Router) { }
+    constructor(
+        private router: Router,
+        public auth: AngularFireAuth
+    ) { }
 
     ngOnInit() { }
 
     ngAfterViewInit(): void {
+        if (this.auth.user) {
+            setTimeout(() => {
+                var elems = document.querySelectorAll('.dropdown-trigger');
+                M.Dropdown.init(elems, {
+                    coverTrigger: false
+                });
+            }, 1000);
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems, {
+            M.Sidenav.init(elems, {
                 edge: 'right'
             });
         });
@@ -28,11 +42,9 @@ export class NavbarComponent implements OnInit {
         let searchValue;
 
         if (e.key === 'Enter') {
-            // @ts-ignore
             searchValue = searchElement.value;
             if (searchValue == '') {
                 e.preventDefault();
-                // @ts-ignore
                 M.toast({
                     html: 'Insert a search value!'
                 });
@@ -45,13 +57,11 @@ export class NavbarComponent implements OnInit {
     public clickSearch(e) {
         e.preventDefault();
 
-        let searchElement = document.getElementById('autocomplete-input');
+        let searchElement: any = document.getElementById('autocomplete-input');
         let searchValue;
-        // @ts-ignore
         searchValue = searchElement.value;
         if (searchValue == '') {
             event.preventDefault();
-            // @ts-ignore
             M.toast({
                 html: 'Insert a search value!'
             });
@@ -62,5 +72,10 @@ export class NavbarComponent implements OnInit {
 
     public search(searchValue) {
         this.router.navigate([`/search/${searchValue}`]);
+    }
+
+    signOut(e) {
+        e.preventDefault();
+        this.auth.signOut();
     }
 }

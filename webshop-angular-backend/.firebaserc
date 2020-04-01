@@ -1,0 +1,17 @@
+{
+  "targets": {
+    "webshop-angular-447f6": {
+      "hosting": {
+        "webshop-angular": [
+          "webshop-angular-447f6"
+        ],
+        "webshop-angular-447f6": [
+          "dsa"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "webshop-angular-447f6"
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTable } from "simple-datatables"
 import { HttpService } from '../../../services/http.service';
+declare let M: any;
 
 @Component({
 	selector: 'app-productlist',
@@ -23,6 +24,18 @@ export class ProductlistComponent implements OnInit {
 			this._onProductsLoadFailed.bind(this));
 	}
 
+	ngAfterViewInit() {
+		document.addEventListener('DOMContentLoaded', function () {
+			var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems);
+		});
+
+		const modalCloseButton = document.getElementsByClassName('modal-close');
+		modalCloseButton[0].addEventListener('click', (e) => {
+			e.preventDefault();
+		});
+	}
+
 	private _onProductsLoaded(data: any): void {
 		this.products = data;
 
@@ -35,7 +48,7 @@ export class ProductlistComponent implements OnInit {
 				"ID",
 				"Name",
 				"Price",
-				"Description",
+				"Description"
 			],
 			data: this.fullProductsArr
 		}
@@ -44,9 +57,12 @@ export class ProductlistComponent implements OnInit {
 			data: this.myData
 		});
 
-		let dataTableSelector = document.getElementsByClassName('dataTable-selector');
-		// @ts-ignore
+		let dataTableSelector: any = document.getElementsByClassName('dataTable-selector');
 		dataTableSelector[0].style.display = 'block'
+	}
+
+	public editProductModal(id) {
+		console.log(id);
 	}
 
 	private _onProductsLoadFailed(error: any): void {
